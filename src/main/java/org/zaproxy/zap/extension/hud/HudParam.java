@@ -31,8 +31,10 @@ import org.zaproxy.zap.common.VersionedAbstractParam;
 import org.zaproxy.zap.eventBus.Event;
 import org.zaproxy.zap.extension.api.ZapApiIgnore;
 import org.zaproxy.zap.extension.hud.tutorial.pages.AjaxSpiderPage;
+import org.zaproxy.zap.extension.hud.tutorial.pages.CommentsPage;
 import org.zaproxy.zap.extension.hud.tutorial.pages.HistoryPage;
 import org.zaproxy.zap.extension.hud.tutorial.pages.HudConfigPage;
+import org.zaproxy.zap.extension.hud.tutorial.pages.ToggleScriptPage;
 
 public class HudParam extends VersionedAbstractParam {
 
@@ -75,7 +77,7 @@ public class HudParam extends VersionedAbstractParam {
      * However for the HUD we do use it to flag new features, so it will typically be updated for
      * each new version of the HUD.
      */
-    private static final int PARAM_CURRENT_VERSION = 3;
+    private static final int PARAM_CURRENT_VERSION = 4;
 
     private String baseDirectory;
 
@@ -104,7 +106,7 @@ public class HudParam extends VersionedAbstractParam {
 
     private List<String> tutorialTasks;
 
-    private List<String> tutorialUpdates = new ArrayList<String>();
+    private List<String> tutorialUpdates = new ArrayList<>();
 
     private boolean newChangelog;
 
@@ -270,7 +272,7 @@ public class HudParam extends VersionedAbstractParam {
     }
 
     private List<String> convert(List<Object> objs) {
-        List<String> strs = new ArrayList<String>(objs.size());
+        List<String> strs = new ArrayList<>(objs.size());
         for (Object obj : objs) {
             strs.add(obj.toString());
         }
@@ -296,6 +298,10 @@ public class HudParam extends VersionedAbstractParam {
         }
         if (fileVersion <= 2) {
             addTutorialUpdate(HistoryPage.NAME);
+        }
+        if (fileVersion <= 3) {
+            addTutorialUpdate(CommentsPage.NAME);
+            addTutorialUpdate(ToggleScriptPage.NAME);
         }
         getConfig().setProperty(PARAM_TUTORIAL_UPDATES, tutorialUpdates);
 

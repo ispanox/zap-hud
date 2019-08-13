@@ -33,3 +33,4 @@
 # JS
 node_modules/
 dist/
+*.workflow
